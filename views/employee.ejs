@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <h3 class="mt-4 mb-2 w-100">Employees Data</h3>
+        <div>
+          <a href="employee/add" class="btn btn-primary my-3">Create Employee</a>
+        </div>
+       <% if (message.length > 0) { %>
+        <% message.forEach(el => { %>
+          <div class="alert alert-danger" role="alert">
+            <%= el %>
+          </div>
+        <% }) %>
+       <% } %>
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tasks</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% employees.forEach((el,i) => { %>
+               <tr>
+                   <td><%= i+1 %></td>
+                   <td><%= el.name %></td>
+                    <% if (el.contact !== null) { %>
+                    <td><%= el.contact.phone %></td>           
+                    <td><%= el.contact.email %></td>           
+                    <% } %>
+                    <td>
+                      <ol>
+                      <% el.tasksId.forEach(el => { %>
+                        <li><%= el.name %></li>
+                      <% }) %>
+                      </ol>
+                    </td>
+                    <td>
+                      <a href="employee/edit" class="btn btn-success">Edit</a>
+                      <form class="delete-employee-form d-inline-block" action="employee/<%= el.id %>?_method=DELETE" method="post" enctype="application/x-www-form-urlencoded">
+                        <input type="submit" class="btn btn-danger delete-employee-btn" data-id=<%= el.id %> value="Delete">
+                      </form>
+                    </td>
+               </tr>
+              <% }) %>
+            </tbody>
+          </table>
+    </div>
+</div>
